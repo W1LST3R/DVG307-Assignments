@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry excluding="src/" kind="src" path=""/>
-	<classpathentry kind="lib" path="//hig-ad/student/homes/Algoritmer DVG307/Lab3/DVG307_lab3/DVG307_lab3/DVG307_lib.jar"/>
-	<classpathentry kind="lib" path="C:/DVG307/DVG307-Assignments/LabbarDVG307/DVG307_lib.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/DVG307/DVG307-Assignments/LabbarDVG307/DVG307_lib.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

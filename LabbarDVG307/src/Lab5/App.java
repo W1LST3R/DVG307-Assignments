@@ -64,36 +64,36 @@ public class App {
 	}
 
 	private static <T extends Comparable<T>> ArrayList<T> heapSort(ArrayList<T> list, String choise) {
-		T[] arr = transformToArr(list);
+		T[] temp = (T[]) new Comparable[list.size()];
 		Heapish<T> heap;
 		if (choise == "MIN") {
-			heap = new MinHeap<T>(arr);
+			heap = new MinHeap<T>(temp);
 		} else {
-			heap = new MaxHeap<T>(arr);
+			heap = new MaxHeap<T>(temp);
 		}
 
-		for (int i = 0; i < arr.length; i++) {
-			heap.insert(arr[i]);
+		for (int i = 0; i < list.size(); i++) {
+			heap.insert(list.get(i));
 		}
-		while(heap.size() != 0) {
+		while(!heap.empty()) {
 			T value = heap.extract();
-			arr[heap.size()] = value;
+			list.set(heap.size(), value);
 		}
-		ArrayList<T> sortedList = transformToList(arr);
-		return sortedList;
+		return list;
 	}
 
 	private static <T extends Comparable<T>> T[] heapSort(T[] arr, String choise) {
-		Heapish<T> heap = new MinHeap<T>(arr);
+		T[] temp = (T[]) new Comparable[arr.length];
+		Heapish<T> heap;
 		if (choise == "MIN") {
-			heap = new MinHeap<T>(arr);
+			heap = new MinHeap<T>(temp);
 		} else {
-			heap = new MaxHeap<T>(arr);
+			heap = new MaxHeap<T>(temp);
 		}
 		for (int i = 0; i < arr.length; i++) {
 			heap.insert(arr[i]);
 		}
-		while(heap.size() != 0) {
+		while(!heap.empty()) {
 			T value = heap.extract();
 			arr[heap.size()] = value;
 		}
@@ -106,7 +106,7 @@ public class App {
 		for(int j = 0;j<6;j++ ) {
 			Integer[] arr = new Integer[size];
 			for (int i = 0; i < arr.length; i++) {
-				arr[i] =  (int) (100 * Math.random() + 1);
+				arr[i] =  (int) (1000 * Math.random() + 1);
 			}
 			Integer[] arrCpy = arr; 
 			ArrayList<Integer> list = transformToList(arr);
@@ -114,6 +114,8 @@ public class App {
 			
 			QuickSort qs = new QuickSort(arrCpy);
 			QuickSort qsl = new QuickSort(transformToArr(listCpy));
+			
+			
 			double q1 = System.currentTimeMillis();
 			qs.sort(arrCpy, 0, arrCpy.length-1);
 			double q2 = System.currentTimeMillis();
@@ -135,14 +137,14 @@ public class App {
 			double tl2 = System.currentTimeMillis();
 			
 			
-			String str = "[";
+			/*String str = "[";
 			String strQS = "[";
 			for(int i =0;i<arr.length;i++) {
 				str += " "+arr[i];
 				strQS += " "+arrCpy[i];
 			}
 			str += " ]";
-			strQS += " ]";
+			strQS += " ]";*/
 			
 			//System.out.println(str);
 			//System.out.println(strQS);
