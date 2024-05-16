@@ -75,13 +75,12 @@ public class App {
 		for (int i = 0; i < arr.length; i++) {
 			heap.insert(arr[i]);
 		}
-		while(!heap.empty()) {
+		while(heap.size() != 0) {
 			T value = heap.extract();
 			arr[heap.size()] = value;
 		}
 		ArrayList<T> sortedList = transformToList(arr);
 		return sortedList;
-
 	}
 
 	private static <T extends Comparable<T>> T[] heapSort(T[] arr, String choise) {
@@ -94,7 +93,7 @@ public class App {
 		for (int i = 0; i < arr.length; i++) {
 			heap.insert(arr[i]);
 		}
-		while(!heap.empty()) {
+		while(heap.size() != 0) {
 			T value = heap.extract();
 			arr[heap.size()] = value;
 		}
