@@ -7,6 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry excluding="src/" kind="src" path=""/>
-	<classpathentry exported="true" kind="lib" path="C:/DVG307/DVG307-Assignments/LabbarDVG307/DVG307_lib.jar"/>
+	<classpathentry kind="lib" path="//hig-ad/student/homes/Algoritmer DVG307/Lab3/DVG307_lab3/DVG307_lab3/DVG307_lib.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

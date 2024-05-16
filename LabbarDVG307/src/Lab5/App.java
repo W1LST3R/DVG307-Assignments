@@ -13,31 +13,33 @@ import java.util.Random;
 import Lab4.QuickSort;
 
 public class App {
-	private Integer[] array = new Integer[1000];
-	private Heapish<Integer> heap = new MinHeap<Integer>(array);
+	
 
+	//Adds and extracts values from a Heap, also gets the time for both functions
 	private void testDummy() {
-		double t1 = System.nanoTime();
-		for (int i = 0; i < 20; i++) {
-			heap.insert((int) (100 * Math.random() + 1));
+		int size = 16000;
+		for(int j = 0; j<6;j++) {
+			Integer[] array = new Integer[size];
+			Heapish<Integer> heap = new MinHeap<Integer>(array);
+			double t1 = System.currentTimeMillis();
+			for (int i = 0; i < size; i++) {
+				heap.insert((int) (100 * Math.random() + 1));
+			}
+			double t2 = System.currentTimeMillis();
+			System.out.println("För insert "+size+" values: " + (t2 - t1) + " ms");
+			//heap.print();
+			t1 = System.currentTimeMillis();
+			while(!heap.empty()) {
+				heap.extract();
+			}
+			t2 = System.currentTimeMillis();
+			System.out.println("För extract "+size+" values: " + (t2 - t1) + " ms");
+			System.out.println(heap.isHeap());	
+			size*=2;
 		}
-		//hej
-		double t2 = System.nanoTime();
-		System.out.println("För insert: " + (t2 - t1) + " ns");
-		heap.print();
-		t1 = System.nanoTime();
-		for (int i = 0; i < 20; i++) {
-			heap.extract();
-		}
-		t2 = System.nanoTime();
-		System.out.println("För extract: " + (t2 - t1) + " ns");
-		System.out.println(heap.isHeap());
-
-		/*
-		 * while (!heap.empty()) System.out.println(heap.extract());
-		 */
 	}
 
+	//Transforms an array to an list
 	private static <T extends Comparable<T>> ArrayList<T> transformToList(T[] arr) {
 
 		ArrayList<T> list = new ArrayList<T>();
@@ -46,7 +48,7 @@ public class App {
 		}
 		return list;
 	}
-	
+	//Transforms an list to an array
 	private static <T extends Comparable<T>> T[] transformToArr(ArrayList<T> list) {
 		T[] arr = (T[]) new Comparable[list.size()];
 		for (int i = 0; i < list.size(); i++) {
@@ -54,7 +56,7 @@ public class App {
 		}
 		return arr;
 	}
-	
+	//Transforms an list to an Integer array
 	private static <T extends Comparable<T>> Integer[] transformToArrInteger(ArrayList<T> list) {
 		Integer[] arr = new Integer[list.size()];
 		for (int i = 0; i < list.size(); i++) {
@@ -63,15 +65,20 @@ public class App {
 		return arr;
 	}
 
+	//Heap sort for an list
 	private static <T extends Comparable<T>> ArrayList<T> heapSort(ArrayList<T> list, String choise) {
+		//Makes a empty array of the same size as the list
 		T[] temp = (T[]) new Comparable[list.size()];
 		Heapish<T> heap;
+		//decides if it should be a min or max heap
 		if (choise == "MIN") {
 			heap = new MinHeap<T>(temp);
 		} else {
 			heap = new MaxHeap<T>(temp);
 		}
-
+		//inserts and extracts all values
+		//MinHeap will be sorted from high to low [9 8 6 3 2 1]
+		//MaxHeap will be sorted from low to high [1 2 3 6 8 9]
 		for (int i = 0; i < list.size(); i++) {
 			heap.insert(list.get(i));
 		}
@@ -82,14 +89,20 @@ public class App {
 		return list;
 	}
 
+	//Heap sort for an array
 	private static <T extends Comparable<T>> T[] heapSort(T[] arr, String choise) {
+		//Makes a empty array of the same size as the arr
 		T[] temp = (T[]) new Comparable[arr.length];
 		Heapish<T> heap;
+		//decides if it should be a min or max heap
 		if (choise == "MIN") {
 			heap = new MinHeap<T>(temp);
 		} else {
 			heap = new MaxHeap<T>(temp);
 		}
+		//inserts and extracts all values
+		//MinHeap will be sorted from high to low [9 8 6 3 2 1]
+		//MaxHeap will be sorted from low to high [1 2 3 6 8 9]
 		for (int i = 0; i < arr.length; i++) {
 			heap.insert(arr[i]);
 		}
@@ -101,53 +114,44 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		//new App().testDummy();
+		new App().testDummy();
 		int size = 16000;
 		for(int j = 0;j<6;j++ ) {
-			Integer[] arr = new Integer[size];
-			for (int i = 0; i < arr.length; i++) {
-				arr[i] =  (int) (1000 * Math.random() + 1);
+			Integer[] arrHeap = new Integer[size];
+			Integer[] arrQuick = new Integer[size];
+			ArrayList<Integer> listHeap = new ArrayList<Integer>();
+			ArrayList<Integer> listQuick = new ArrayList<Integer>();
+			for (int i = 0; i < arrHeap.length; i++) {
+				int value =  (int) (100 * Math.random() + 1);
+				arrHeap[i]=value;
+				arrQuick[i]=value;
+				listHeap.add(value);
+				listQuick.add(value);
 			}
-			Integer[] arrCpy = arr; 
-			ArrayList<Integer> list = transformToList(arr);
-			ArrayList<Integer> listCpy = list;
-			
-			QuickSort qs = new QuickSort(arrCpy);
-			QuickSort qsl = new QuickSort(transformToArr(listCpy));
+			QuickSort qs = new QuickSort(arrQuick);
+			QuickSort qsl = new QuickSort(transformToArr(listQuick));
 			
 			
 			double q1 = System.currentTimeMillis();
-			qs.sort(arrCpy, 0, arrCpy.length-1);
+			qs.sort(arrQuick, 0, arrQuick.length-1);
 			double q2 = System.currentTimeMillis();
 			
 			// Type MIN to get a minHeap. Type MAX to get a maxHeap
 			double t1 = System.currentTimeMillis();
-			heapSort(arr,"MIN");
+			heapSort(arrHeap,"MIN");
 			double t2 = System.currentTimeMillis();
 			
 			double ql1 = System.currentTimeMillis();
-			Integer[] arrList = transformToArrInteger(listCpy);
+			Integer[] arrList = transformToArrInteger(listQuick);
 			qs.sort(arrList, 0, arrList.length-1);
 			transformToList(arrList);
 			double ql2 = System.currentTimeMillis();
 			
 			// Type MIN to get a minHeap. Type MAX to get a maxHeap
 			double tl1 = System.currentTimeMillis();
-			heapSort(list,"MIN");
+			heapSort(listHeap,"MIN");
 			double tl2 = System.currentTimeMillis();
 			
-			
-			/*String str = "[";
-			String strQS = "[";
-			for(int i =0;i<arr.length;i++) {
-				str += " "+arr[i];
-				strQS += " "+arrCpy[i];
-			}
-			str += " ]";
-			strQS += " ]";*/
-			
-			//System.out.println(str);
-			//System.out.println(strQS);
 			System.out.println("HeapSort with array took "+(t2-t1)+" ms, with "+size+" values");
 			System.out.println("QuickSort with array took "+(q2-q1)+" ms, with "+size+" values");
 			System.out.println("--------------------------------------------------------------------------");
@@ -158,12 +162,31 @@ public class App {
 			size=size*2;
 		}
 		
+		Integer[] minArr = new Integer[30];
+		Integer[] maxArr = new Integer[30];
+		for (int i = 0; i < minArr.length; i++) {
+			int value = (int) (30 * Math.random() + 1);
+			minArr[i] =  value;
+			maxArr[i]= value;
+		}
+		heapSort(minArr,"MIN");
+		heapSort(maxArr,"MAX");
+		String minStr = "[";
+		String maxStr = "[";
+		for(int i =0;i<minArr.length;i++) {
+			minStr += " "+minArr[i];
+			maxStr += " "+maxArr[i];
+		}
+		minStr += " ]";
+		maxStr += " ]";
+		System.out.println("MinHeap sorted: "+minStr);
+		System.out.println("MaxHeap sorted: "+maxStr);
 		System.out.println();
 		System.out.println();
-		//swé
 		System.out.println();
 
 		
+		//Two priorityQ one with Characters as weights and the other with Integers as weights
 		PriorityQ_ToFill<String, Character> pq = new PriorityQ_ToFill<String, Character>(100);
 		pq.insert("Jonas", 'a');
 		pq.insert("Apan", 'e');
@@ -178,6 +201,21 @@ public class App {
 		pq.insert("1234567", 'g');
 		while(pq.size() > 0)
 		  System.out.println(pq.extract());
+		
+		PriorityQ_ToFill<String, Integer> pqT = new PriorityQ_ToFill<String, Integer>(100);
+		pqT.insert("Jonas", 5);
+		pqT.insert("Apan", 4);
+		pqT.insert("Ara", 3);
+		pqT.insert("Bengtsson", 9);
+		pqT.insert("Sara", 4);
+		pqT.insert("Sverker", 7);
+		pqT.insert("Bo", 2);
+		pqT.insert("Gunnarsson", 10);
+		pqT.insert("12345", 5);
+		pqT.insert("1", 1);
+		pqT.insert("1234567", 7);
+		while(pqT.size() > 0)
+		  System.out.println(pqT.extract());
 	}
 
 }

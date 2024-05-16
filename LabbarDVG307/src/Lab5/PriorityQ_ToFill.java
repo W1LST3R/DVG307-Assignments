@@ -17,13 +17,11 @@ public class PriorityQ_ToFill<DATA, WEIGHT extends Comparable<WEIGHT>> // Should
 	}
 
 	public void insert(DATA data, WEIGHT weight) {
-		Node temp = new Node(data, weight);
-		heap.insert(temp);
+		heap.insert(new Node(data, weight));
 	}
 
 	public DATA extract() {
-		Node temp = heap.extract();
-		return temp.data;
+		return heap.extract().getData();
 	}
 
 	private class Node implements Comparable<Node> {

@@ -64,6 +64,7 @@ public class Algorithms {
 		  return returnList;
 	}
 	
+	//searches for the minimal between two points in amount of points
 	public void rekSearch(int start,int next,double best,int size,String minDist){
 		double newBest = best;
 		String newMin = minDist;
@@ -85,6 +86,7 @@ public class Algorithms {
 		}
 	}
 	
+	//Finds the minimal distance
 	public String getMinDist(int start,int next,double best,int size,String minDist){
 		double newBest = best;
 		String newMin = minDist;
@@ -102,6 +104,7 @@ public class Algorithms {
 		return newMin;
 	}
 
+    //Calculate distance to a point
 	public double distance(int x0,int x1, int y0,int y1){
 		return Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));
 	}
