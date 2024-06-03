@@ -61,52 +61,57 @@ public class MaxHeap <T extends Comparable<T>> implements Heapish<T> {
 		T top = top();
 		N--;
 		storage[0] = storage[N];
-		storage[N] = null;
-		int parent = 0;
-		int leftChild;
-		int rightChild;
+		int parentIndex = 0;
+		int leftChildIndex;
+		int rightChildIndex;
+		T parent;
+		T leftChild;
+		T rightChild;
 		//lastIndex is the total number of nodes
 		int lastIndex = N;
 		String side ="Right";
 		//while the parent index is bellow lastindex it will continue
-		while (lastIndex > parent) {
+		while (lastIndex > parentIndex) {
 			//Gets index for the right and left child
-			leftChild = (2 * parent) + 1;
-			rightChild = (2 * parent) + 2;
+			leftChildIndex = (2 * parentIndex) + 1;
+			rightChildIndex = (2 * parentIndex) + 2;
+			parent = storage[parentIndex];
 			//If both childsindex are bellow lastindex
-			if(rightChild < lastIndex && leftChild < lastIndex){
-				//If a child has a value higher than parent
-				if(storage[parent].compareTo(storage[rightChild]) < 0 || storage[parent].compareTo(storage[leftChild]) < 0) {
+			if(rightChildIndex < lastIndex && leftChildIndex < lastIndex){
+				leftChild = storage[leftChildIndex];
+				rightChild = storage[rightChildIndex];
+				//If a child has a value less than parent
+				if(parent.compareTo(rightChild) < 0 || parent.compareTo(leftChild) < 0) {
 					//if both children have the same value, then it picks every other side
-					if (storage[rightChild].compareTo(storage[leftChild]) == 0) {
+					if (rightChild.compareTo(leftChild) == 0) {
 						if (side == "Right") {
-							swap(parent, rightChild);
-							parent = rightChild;
+							swap(parentIndex, rightChildIndex);
+							parentIndex = rightChildIndex;
 							side ="Left";
 						} else {
-							swap(parent, leftChild);
-							parent = leftChild;
+							swap(parentIndex, leftChildIndex);
+							parentIndex = leftChildIndex;
 							side ="Right";
 						}
-					//checks to see which child is bigger
-					} else if (storage[rightChild].compareTo(storage[leftChild]) < 0) {
-						swap(parent, leftChild);
-						parent = leftChild;
+					//checks to see which child is smaller
+					} else if (rightChild.compareTo(leftChild) < 0) {
+						swap(parentIndex, leftChildIndex);
+						parentIndex = leftChildIndex;
 
 					} else {
-						swap(parent, rightChild);
-						parent = rightChild;
-
+						swap(parentIndex, rightChildIndex);
+						parentIndex = rightChildIndex;
 					}
-					//if no child is more than parent
-				}else parent = N;
+				//if no child is less than parent
+				}else parentIndex = N;
 			//Can have i child to the left and not to the right
-			}else if(leftChild < lastIndex) {
-				if(storage[parent].compareTo(storage[leftChild]) < 0) {
-						swap(parent, leftChild);
-						parent = leftChild;
-				}else parent = N;
-			}else parent = N;
+			}else if(leftChildIndex < lastIndex) {
+				leftChild = storage[leftChildIndex];
+				if(parent.compareTo(leftChild) < 0) {
+						swap(parentIndex, leftChildIndex);
+						parentIndex = leftChildIndex;
+				}else parentIndex = N;
+			}else parentIndex = N;
 		}
 
 		return top;
